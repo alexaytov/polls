@@ -1,6 +1,6 @@
 {
-	"appId": "io.ionic.starter",
-	"appName": "polls-ui",
-	"webDir": "www",
-	"bundledWebRuntime": false
+  "appId": "com.aleks.polls",
+  "appName": "polls-ui",
+  "webDir": "www",
+  "bundledWebRuntime": false
 }
