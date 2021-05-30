@@ -1,3 +1,4 @@
+import { MessageResultComponent } from './../message-result/message-result.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -16,7 +17,9 @@ import { CreatePollPage } from './create-poll.page';
     CreatePollPageRoutingModule
   ],
   declarations: [
-    CreatePollPage],
+    CreatePollPage,
+    MessageResultComponent
+  ],
   providers: [
 
   ]

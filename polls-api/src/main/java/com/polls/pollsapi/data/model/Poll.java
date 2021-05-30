@@ -1,16 +1,18 @@
 package com.polls.pollsapi.data.model;
 
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.List;
+
+import static javax.persistence.CascadeType.PERSIST;
 
 @Entity
 @Table(name = "poll")
 public class Poll extends BaseEntity {
 
     private String name;
-    @ElementCollection
+    @OneToMany(cascade = PERSIST)
     private List<Question> questions;
 
     public Poll(String name, List<Question> questions) {

@@ -31,9 +31,9 @@ paths:
         200:
           description: success
           content:
-             application/json:
-               schema:
-                 $ref: '#/components/schemas/Poll'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Poll'
   /poll/{pollID}/result:
     get:
       tags:
@@ -99,7 +99,7 @@ paths:
       responses:
         200:
           description: success
-          content: {}
+          content: { }
 components:
   schemas:
     Poll:
@@ -168,7 +168,7 @@ components:
     PollSubmission:
       type: object
       properties:
-        questions:
+        answers:
           type: array
           items:
             $ref: '#/components/schemas/QuestionSubmission'

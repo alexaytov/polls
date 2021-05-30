@@ -1,13 +1,14 @@
+import { UtilsService } from './../services/utils.service';
+import { MessageResultComponent } from './../message-result/message-result.component';
+import { PopoverController } from '@ionic/angular';
 /* eslint-disable @typescript-eslint/ban-types */
-import { PreloadAllModules, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Poll } from '../model/poll.model';
 import { Question } from '../model/question.model';
 import { PollService } from '../services/poll/poll.service';
-import { AnswerResult } from '../model/answer-result.model';
 import { Answer } from '../model/answer.model';
-import { AlertController, LoadingController, PopoverController } from '@ionic/angular';
-import { OverlayBaseController } from '@ionic/angular/util/overlay';
+import { AlertController, LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-create-poll',
@@ -19,29 +20,29 @@ export class CreatePollPage implements OnInit {
   poll = new Poll();
   loading;
 
-  constructor(private router: Router,
+  constructor(
     private loadingController: LoadingController,
-    private alertController: AlertController,
-     private pollService: PollService) { }
+    private popoverController: PopoverController,
+    private pollService: PollService,
+    private utilsService: UtilsService) { }
 
   ngOnInit() {
   }
 
-  createPoll() {
-    this.showLoading();
+  async createPoll() {
+    await this.showLoading();
 
-    console.log(this.poll);
     this.pollService.createPoll(this.poll)
-    .subscribe({
-      next: (poll: {[key: string]: any}) => {
-        this.hideLoading();
-        this.showResult(`${this.router.url}/poll/${poll.id}`);
-      },
-      error: err => {
-        this.hideLoading();
-        this.showResult(err.message);
-      }
-    });
+      .subscribe({
+        next: (poll: { [key: string]: any }) => {
+          this.hideLoading();
+          this.showResult(`/poll/${poll.id}`);
+        },
+        error: err => {
+          this.hideLoading();
+          this.showResult(err.message);
+        }
+      });
   }
 
   addQuestion() {
@@ -57,29 +58,19 @@ export class CreatePollPage implements OnInit {
   }
 
   async showResult(text: string) {
-    const alert = await this.alertController.create({
-      header: 'Result',
-      message: text,
-      buttons: [
-        {
-          text: 'ok'
-        }
-      ]
-    });
-
-    await alert.present();
+    const params = {
+      value: text,
+      link: true
+    };
+    await this.utilsService.showResult(MessageResultComponent, params);
   }
 
   async showLoading() {
-    this.loading = await this.loadingController.create({
-      message: 'Please wait...',
-    });
-
-    await this.loading.present();
+    await this.utilsService.showLoading();
   }
 
   async hideLoading() {
-    await this.loading.dismiss();
+    await this.utilsService.hideLoading();
   }
 
 }

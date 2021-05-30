@@ -4,7 +4,11 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./create-poll/create-poll.module').then(m => m.CreatePollPageModule)
+    loadChildren: () => import('./create-poll/create-poll.module').then(m => m.CreatePollPageModule),
+  },
+  {
+    path: 'poll/:id',
+    loadChildren: () => import('./poll/poll.module').then( m => m.PollPageModule)
   }
 ];
 @NgModule({

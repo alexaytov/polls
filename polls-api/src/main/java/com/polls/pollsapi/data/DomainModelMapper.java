@@ -1,8 +1,6 @@
 package com.polls.pollsapi.data;
 
-import dto.Answer;
-import dto.Poll;
-import dto.Question;
+import dto.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,6 +40,17 @@ public class DomainModelMapper {
                 .questions(questions);
     }
 
+    public static PollResult toDtoResult(com.polls.pollsapi.data.model.Poll poll) {
+        List<QuestionResult> questions = poll.getQuestions().stream()
+                .map(DomainModelMapper::toDtoResult)
+                .collect(Collectors.toList());
+
+        return new PollResult()
+                .id(poll.getId())
+                .name(poll.getName())
+                .questions(questions);
+    }
+
     public static Question toDto(com.polls.pollsapi.data.model.Question question) {
         List<Answer> answers = question.getAnswers().stream().map(DomainModelMapper::toDto).collect(Collectors.toList());
 
@@ -51,9 +60,25 @@ public class DomainModelMapper {
                 .answers(answers);
     }
 
+    public static QuestionResult toDtoResult(com.polls.pollsapi.data.model.Question question) {
+        List<AnswerResult> answers = question.getAnswers().stream()
+                .map(DomainModelMapper::toDtoResult)
+                .collect(Collectors.toList());
+
+        return new QuestionResult()
+                .question(question.getQuestion())
+                .answers(answers);
+    }
+
     public static Answer toDto(com.polls.pollsapi.data.model.Answer answer) {
         return new Answer()
                 .id(answer.getId())
+                .text(answer.getText());
+    }
+
+    public static AnswerResult toDtoResult(com.polls.pollsapi.data.model.Answer answer) {
+        return new AnswerResult()
+                .answers(answer.getAnswers().intValue())
                 .text(answer.getText());
     }
 
