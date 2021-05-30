@@ -1,3 +1,4 @@
+import { ResultMessage } from './../model/result-message.model';
 import { Component, Input, OnInit, ViewContainerRef } from '@angular/core';
 import { ModalController, PopoverController } from '@ionic/angular';
 
@@ -8,13 +9,11 @@ import { ModalController, PopoverController } from '@ionic/angular';
 })
 export class MessageResultComponent implements OnInit {
 
-  @Input() value: string;
-  @Input() error = false;
-  @Input() link = false;
+  @Input() messages: ResultMessage[] = [];
 
   constructor(private popoverController: PopoverController) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   onDismiss() {
     this.popoverController.dismiss();

@@ -7,8 +7,6 @@ import { PollResult } from 'src/app/model/poll-result.model';
 import { PollSubmission } from 'src/app/model/poll-submission.model';
 
 const POLL_ENDPOINT = 'http://localhost:9090/poll';
-// const POLL_ENDPOINT = 'https://aleks.free.beeceptor.com';
-// const POLL_ENDPOINT = 'https://requestinspector.com/inspect/01f6z069f8m2x1j799mdny9wkq';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +24,7 @@ export class PollService {
   }
 
   getPollResults(id: string): Observable<PollResult> {
-    return this.http.get<PollResult>(`${POLL_ENDPOINT}/${id}/results`);
+    return this.http.get<PollResult>(`${POLL_ENDPOINT}/${id}/result`);
   }
 
   submitPoll(id: string, submission: PollSubmission): Observable<Object> {

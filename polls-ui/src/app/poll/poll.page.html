@@ -1,12 +1,16 @@
 <ion-header>
   <ion-toolbar>
     <ng-container *ngIf="error">
-      <h1>An error occurred</h1>
+      <ion-title class="title">An error occurred</ion-title>
     </ng-container>
 
     <ng-container *ngIf="poll">
-      <h1>Poll name: {{ poll.name }}</h1>
+      <ion-title class="title">Poll '{{ poll.name }}'</ion-title>
     </ng-container>
+
+    <ion-button slot="end" routerLink="/create-poll">Create Poll</ion-button>
+    <ion-button *ngIf="poll && poll.id" slot="end" routerLink="/poll-results/{{ poll.id }}">View Poll Results
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
@@ -21,14 +25,14 @@
     <ion-card>
       <ion-card-content>
 
-        <ion-list lines="full">
-          <ion-item style="width: 100%;" *ngFor="let question of poll.questions">
+        <ion-list>
+          <ion-item class="no-ripple" style="width: 100%;" *ngFor="let question of poll.questions">
             <div style="width: 100%;">
               <ion-title>
                 {{ question.question }}
               </ion-title>
 
-              <ion-list lines="full">
+              <ion-list>
                 <ion-radio-group>
                   <ion-item style="width: 100%;" *ngFor="let answer of question.answers">
                     {{ answer.text }}

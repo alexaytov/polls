@@ -1,3 +1,4 @@
+import { ResultMessage } from './../model/result-message.model';
 import { MessageResultComponent } from './../message-result/message-result.component';
 import { UtilsService } from './../services/utils.service';
 /* eslint-disable @typescript-eslint/ban-types */
@@ -44,25 +45,18 @@ export class PollPage implements OnInit {
   async submit() {
     await this.utilsService.showLoading();
 
-
-
     this.pollService.submitPoll(this.poll.id, this.map(this.answers)).subscribe(
       {
         next: () => {
           this.utilsService.hideLoading();
           this.utilsService.showResult(MessageResultComponent, {
-            value: 'Successfully submitted poll',
-            error: true,
-            link: false
+            messages: [new ResultMessage('Successfully submitted poll')],
           });
-          console.log('success');
         },
         error: err => {
           this.utilsService.hideLoading();
           this.utilsService.showResult(MessageResultComponent, {
-            value: `An error occurred ${err.message}`,
-            error: true,
-            link: false
+            messages: [new ResultMessage(err.message, false, 'An error occurred')]
           });
         }
       });

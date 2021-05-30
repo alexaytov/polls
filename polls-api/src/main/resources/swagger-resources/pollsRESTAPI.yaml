@@ -123,7 +123,7 @@ components:
           type: string
         name:
           type: string
-        questions:
+        questionResults:
           type: array
           items:
             $ref: '#/components/schemas/QuestionResult'

@@ -34,6 +34,7 @@ public class PollController implements PollApi {
 
     @Override
     public ResponseEntity<Void> createPollSubmission(String pollID, PollSubmission pollSubmission) {
+        pollService.submitPoll(pollID, pollSubmission);
         URI uri = URI.create(String.format(CREATED_URL_TEMPLATE, pollID));
         return created(uri).build();
     }
