@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Create Poll</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- <form #myForm="ngForm"> -->
+
+  <ion-card>
+    <ion-card-title>
+      <ion-input name="pollName" required [(ngModel)]="poll.name" placeholder="Poll name"></ion-input>
+    </ion-card-title>
+    <ion-card-content>
+
+      <ion-list>
+        <ion-item style="width: 100%;" *ngFor="let question of poll.questions;trackBy: trackByFn; let questionId = index;">
+          <div style="width: 100%;">
+            <ion-input required name="question {{ questionId }}" style="text-align: center;" [(ngModel)]="poll.questions[questionId].question" placeholder="Question"></ion-input>
+
+          <ion-list>
+            <ion-item *ngFor="let answer of poll.questions[questionId].answers; trackBy: trackByFn let answerId = index">
+              <ion-input required name="answer {{ questionId }}" [(ngModel)]="poll.questions[questionId].answers[answerId].text"></ion-input>
+            </ion-item>
+
+          </ion-list>
+          <div style="text-align: right;">
+            <ion-button required (click)="addAnswer(questionId)">Add answer</ion-button>
+          </div>
+        </div>
+        </ion-item>
+        <ion-button (click)="addQuestion()">Add question</ion-button>
+      </ion-list>
+
+      <ion-button id="create-poll-btn" (click)="createPoll()">Create poll</ion-button>
+    </ion-card-content>
+  </ion-card>
+<!-- </form> -->
+</ion-content>
