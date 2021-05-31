@@ -1,16 +1,14 @@
+/* eslint-disable id-blacklist */
+/* eslint-disable @typescript-eslint/ban-types */
 import { ResultMessage } from './../model/result-message.model';
 import { UtilsService } from './../services/utils.service';
 import { MessageResultComponent } from './../message-result/message-result.component';
-import { PopoverController } from '@ionic/angular';
-/* eslint-disable @typescript-eslint/ban-types */
-import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Poll } from '../model/poll.model';
 import { Question } from '../model/question.model';
 import { PollService } from '../services/poll/poll.service';
 import { Answer } from '../model/answer.model';
-import { AlertController, LoadingController } from '@ionic/angular';
-import { QuestionAnswer } from '../model/question-answer.model';
+import { Clipboard } from '@capacitor/clipboard';
 
 @Component({
   selector: 'app-create-poll',
@@ -21,6 +19,9 @@ export class CreatePollPage implements OnInit {
 
   poll = new Poll();
   loading;
+  createdPoll = false;
+  createdPollName: string;
+  createdPollId: string;
 
   constructor(
     private pollService: PollService,
@@ -41,7 +42,8 @@ export class CreatePollPage implements OnInit {
       .subscribe({
         next: (poll: { [key: string]: any }) => {
           this.hideLoading();
-          this.showPollData(poll.id);
+          this.utilsService.showInfoAlert('Success', `Poll ${poll.name} successfully created`);
+          this.showPollData(poll.id, poll.name);
         },
         error: err => {
           this.hideLoading();
@@ -65,6 +67,25 @@ export class CreatePollPage implements OnInit {
 
     return valid;
   }
+
+  writeToClipboard = async (text) => {
+    await Clipboard.write({
+      string: text
+    });
+  };
+
+  copyPollToClipboard(pollId: string) {
+    this.writeToClipboard(`${this.getBasePath()}/poll/${pollId}`);
+  }
+
+  copyPollResultsToClipboard(pollId: string) {
+    this.writeToClipboard(`${this.getBasePath()}/poll-results/${pollId}`);
+  }
+
+  getBasePath(): string {
+    return window.location.origin;
+  }
+
   addQuestion() {
     this.poll.questions.push(new Question());
   }
@@ -83,15 +104,12 @@ export class CreatePollPage implements OnInit {
     });
   }
 
-  async showPollData(pollId: string) {
-    const resultMessages: ResultMessage[] = [];
-    resultMessages.push(new ResultMessage(`${window.origin}/poll/${pollId}`, true, 'Poll link'));
-    resultMessages.push(new ResultMessage(`${window.origin}/poll-results/${pollId}`, true, 'Poll results'));
-
-    const params = {
-      messages: resultMessages
-    };
-    await this.utilsService.showResult(MessageResultComponent, params);
+  showPollData(pollId: string, pollName: string) {
+    this.createdPoll = true;
+    console.log(pollName);
+    console.log(pollId);
+    this.createdPollName = pollName;
+    this.createdPollId = pollId;
   }
 
   async showLoading() {

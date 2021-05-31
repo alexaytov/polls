@@ -1,4 +1,4 @@
-import { PopoverController, LoadingController } from '@ionic/angular';
+import { PopoverController, LoadingController, AlertController } from '@ionic/angular';
 import { Injectable, Component, ComponentRef } from '@angular/core';
 
 @Injectable({
@@ -9,9 +9,10 @@ export class UtilsService {
   loading;
 
   constructor(private popoverController: PopoverController,
-    private loadingController: LoadingController) { }
+    private loadingController: LoadingController,
+    private alertController: AlertController) { }
 
-  async showResult(componentName: any, params?: {[key: string]: any}) {
+  async showResult(componentName: any, params?: { [key: string]: any }) {
     const resultPopover = await this.popoverController.create({
       component: componentName,
       showBackdrop: true,
@@ -22,6 +23,20 @@ export class UtilsService {
     });
 
     await resultPopover.present();
+  }
+
+  async showInfoAlert(title: string, info: string) {
+    const alert = await this.alertController.create({
+      header: title,
+      message: info,
+      buttons: [
+        {
+          text: 'Ok'
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   async showLoading() {

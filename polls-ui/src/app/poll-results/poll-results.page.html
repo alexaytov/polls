@@ -1,6 +1,7 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title class="title" *ngIf="pollResult">Poll '{{ pollResult.name }}'' results
+
+    <ion-title slot="start" class="title" *ngIf="pollResult">Poll '{{ pollResult.name }}' results
     </ion-title>
 
     <ion-button slot="end" routerLink="/create-poll">Create poll</ion-button>

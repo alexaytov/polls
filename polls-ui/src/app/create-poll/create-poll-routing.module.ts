@@ -18,4 +18,4 @@ const routes: Routes = [
   exports: [RouterModule, FormsModule],
   providers: []
 })
-export class CreatePollPageRoutingModule {}
+export class CreatePollPageRoutingModule { }

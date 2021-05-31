@@ -6,7 +6,6 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { CreatePollPageRoutingModule } from './create-poll-routing.module';
-
 import { CreatePollPage } from './create-poll.page';
 
 @NgModule({
@@ -21,7 +20,6 @@ import { CreatePollPage } from './create-poll.page';
     MessageResultComponent
   ],
   providers: [
-
   ]
 })
-export class CreatePollPageModule {}
+export class CreatePollPageModule { }
