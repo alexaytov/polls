@@ -4,13 +4,15 @@
       <ion-title class="title">An error occurred</ion-title>
     </ng-container>
 
-    <ng-container *ngIf="poll">
-      <ion-title class="title">Poll '{{ poll.name }}'</ion-title>
-    </ng-container>
+    <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+      <ng-container *ngIf="poll">
+        <ion-title style="width: fit-content;" class="title">Poll '{{ poll.name }}'</ion-title>
+      </ng-container>
 
-    <ion-button slot="end" routerLink="/create-poll">Create Poll</ion-button>
-    <ion-button *ngIf="poll && poll.id" slot="end" routerLink="/poll-results/{{ poll.id }}">View Poll Results
-    </ion-button>
+      <ion-button slot="end" routerLink="/create-poll">Create Poll</ion-button>
+      <ion-button *ngIf="poll && poll.id" slot="end" routerLink="/poll-results/{{ poll.id }}">View Poll Results
+      </ion-button>
+    </div>
   </ion-toolbar>
 </ion-header>
 

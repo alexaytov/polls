@@ -7,7 +7,7 @@ import { PollResult } from 'src/app/model/poll-result.model';
 import { PollSubmission } from 'src/app/model/poll-submission.model';
 
 // const POLL_ENDPOINT = 'http://localhost:9090/poll';
-const POLL_ENDPOINT = 'http://192.168.56.1:9090/poll'; // emulator configuration
+const POLL_ENDPOINT = 'http://192.168.1.5:9090/poll'; // emulator configuration
 
 @Injectable({
   providedIn: 'root'
