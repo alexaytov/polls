@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar>
+    <ng-container *ngIf="error">
+      <ion-title class="title">An error occurred</ion-title>
+    </ng-container>
+
+    <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+      <ng-container *ngIf="poll">
+        <ion-title style="width: fit-content;" class="title">Poll '{{ poll.name }}'</ion-title>
+      </ng-container>
+
+      <ion-button slot="end" routerLink="/create-poll">Create Poll</ion-button>
+      <ion-button *ngIf="poll && poll.id" slot="end" routerLink="/poll-results/{{ poll.id }}">View Poll Results
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ng-container *ngIf="error">
+    <h2>Message: {{ error.message }}</h2>
+    <h2>Status: {{ error.status }}</h2>
+  </ng-container>
+
+  <ng-container *ngIf="poll">
+    <ion-card>
+      <ion-card-content>
+
+        <ion-list>
+          <ion-item class="no-ripple" style="width: 100%;" *ngFor="let question of poll.questions">
+            <div style="width: 100%;">
+              <ion-title>
+                {{ question.question }}
+              </ion-title>
+
+              <ion-list>
+                <ion-radio-group>
+                  <ion-item style="width: 100%;" *ngFor="let answer of question.answers">
+                    {{ answer.text }}
+
+                    <ion-radio (focus)="selectAnswer(question.id, answer.id)" slot="end"></ion-radio>
+                  </ion-item>
+                </ion-radio-group>
+              </ion-list>
+            </div>
+
+          </ion-item>
+        </ion-list>
+
+      </ion-card-content>
+
+      <ion-button expand="block" [disabled]="disableSubmit" (click)="submit()">Submit</ion-button>
+    </ion-card>
+  </ng-container>
+
+</ion-content>

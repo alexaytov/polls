@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+      <ion-title slot="start" style="width: fit-content;" class="title" *ngIf="pollResult">Poll '{{ pollResult.name }}'
+        results
+      </ion-title>
+
+      <ion-button slot="end" routerLink="/create-poll">Create poll</ion-button>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ng-container *ngIf="pollResult && pollResult.questions && pollResult.questions.length !== 0">
+    <ion-card>
+      <ion-card-content>
+        <ion-list>
+          <ion-item lines="full" *ngFor="let question of pollResult.questions">
+            <div style="width: 100%;">
+              {{ question.question }}
+
+              <ion-list style="width: 100%;">
+                <ion-item *ngFor="let answer of question.answers">
+                  {{ answer.text }}
+                  <div slot="end">
+                    {{ answer.answers}}
+                  </div>
+                </ion-item>
+
+
+              </ion-list>
+
+            </div>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+
+  </ng-container>
+
+</ion-content>

@@ -1,0 +1,6 @@
+{
+	"appId": "com.aleks.polls",
+	"appName": "polls-ui",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}

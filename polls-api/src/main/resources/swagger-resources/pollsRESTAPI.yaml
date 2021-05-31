@@ -1,0 +1,181 @@
+openapi: 3.0.1
+info:
+  title: Polls REST API
+  description: Describe the Polls REST API
+  contact:
+    email: alexaytov92@gmail.com
+  version: 1.0.0
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: /
+tags:
+  - name: poll
+    description: Everything about polls
+paths:
+  /poll:
+    post:
+      tags:
+        - poll
+      summary: Create new poll
+      operationId: createPoll
+      requestBody:
+        description: Poll object to be created
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Poll'
+        required: true
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Poll'
+  /poll/{pollID}/result:
+    get:
+      tags:
+        - poll
+      summary: Find poll result by id
+      operationId: getPollResultById
+      parameters:
+        - name: pollID
+          in: path
+          description: ID of poll result
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PollResult'
+  /poll/{pollID}:
+    get:
+      tags:
+        - poll
+      summary: Find poll by ID
+      description: Returns a single poll
+      operationId: getPollById
+      parameters:
+        - name: pollID
+          in: path
+          description: ID of poll to return
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Poll'
+  /poll/{pollID}/submission:
+    post:
+      tags:
+        - poll
+      summary: Create a poll submission
+      description: Creates a poll submission
+      operationId: createPollSubmission
+      parameters:
+        - name: pollID
+          in: path
+          description: ID of poll
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Poll object to be created
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PollSubmission'
+        required: true
+      responses:
+        200:
+          description: success
+          content: { }
+components:
+  schemas:
+    Poll:
+      required:
+        - name
+        - questions
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        questions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Question'
+    PollResult:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        questionResults:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuestionResult'
+    Question:
+      required:
+        - question
+      type: object
+      properties:
+        id:
+          type: string
+        question:
+          type: string
+        answers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Answer'
+    QuestionResult:
+      type: object
+      properties:
+        question:
+          type: string
+        answers:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnswerResult'
+    Answer:
+      required:
+        - text
+      type: object
+      properties:
+        id:
+          type: string
+        text:
+          type: string
+    AnswerResult:
+      type: object
+      properties:
+        text:
+          type: string
+        answers:
+          type: integer
+    PollSubmission:
+      type: object
+      properties:
+        answers:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuestionSubmission'
+    QuestionSubmission:
+      type: object
+      properties:
+        question:
+          type: string
+        answer:
+          type: string

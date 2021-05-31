@@ -1,0 +1,14 @@
+<div style="display: flex; flex-flow: column; justify-content: center;">
+
+  <div *ngFor="let message of messages" style="flex: 1 1 auto; text-align: center;">
+    <ng-container *ngIf="message.link">
+      {{ message.plainText }}: <a *ngIf="message.link" href="{{ message.value }}">{{ message.value }}</a>
+    </ng-container>
+
+    <p *ngIf="!message.link"> {{ message.plainText }} {{ message.value }}</p>
+  </div>
+
+  <ion-button style="flex: 1 1 auto; padding-top: 10px;" (click)="onDismiss()">
+    ok
+  </ion-button>
+</div>
